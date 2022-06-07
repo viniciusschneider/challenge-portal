@@ -1,0 +1,94 @@
+<template>
+  <div class="page-container d-flex justify-center">
+    <div class="page-content">
+      <div class="text-center">
+        <h1>Bem vindo</h1>
+
+        <v-avatar size="100">
+          <img src="@/assets/img_avatar.png" alt="Avatar" />
+        </v-avatar>
+      </div>
+
+      <Form class="ma-10" @send="send">
+        <v-col cols="12">
+          <v-text-field
+            v-model.trim="form.email"
+            label="E-mail"
+            dense
+            :rules="rules.email"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12">
+          <v-text-field
+            v-model.trim="form.password"
+            label="Senha"
+            dense
+            :rules="rules.password"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12">
+          <v-btn
+            type="submit"
+            block
+            color="primary"
+            elevation="3"
+            x-large
+            :loading="loading"
+          >Login</v-btn>
+        </v-col>
+      </Form>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component } from "vue-property-decorator";
+import { email, minLength, required } from "@/common/form-validate";
+import { UserModule } from "@/store/namespaces";
+import Form from "@/components/Form.vue";
+import loginService from '@/services/login.service'
+import Vue from "vue";
+
+@Component({
+  components: { Form },
+})
+export default class Login extends Vue {
+  @UserModule.Action("setAccessToken") setAccessToken: any;
+
+  loading = false;
+  form = { email: "admin@admin.com", password: "12345678" };
+  rules = {
+    email: [required, email],
+    password: [required, minLength(8)],
+  };
+
+  async send() {
+    this.loading = true;
+
+    try {
+      const response = await loginService.login(this.form);
+      this.setAccessToken(response);
+      this.$router.push({ name: "Teams" });
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      this.loading = false;
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.page-container {
+  .page-content {
+    margin-top: 100px;
+
+    h1 {
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+  }
+}
+</style>
