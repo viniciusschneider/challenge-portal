@@ -1,4 +1,4 @@
 export interface ITypeSport {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }

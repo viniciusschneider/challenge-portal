@@ -1,9 +1,9 @@
-import { ActionContext } from 'vuex'
-import teamsService from '@/services/teams.service'
-import { ITeamItem, ITeams } from '@/interfaces/teams.interface'
-import axios, { CancelTokenSource } from 'axios'
-import { IPaginationParams } from '@/interfaces/pagination-params.interface'
-import { IRenderList } from '@/interfaces/render-list.interface'
+import { ActionContext } from 'vuex';
+import teamsService from '@/services/teams.service';
+import { ITeamItem, ITeams } from '@/interfaces/teams.interface';
+import axios, { CancelTokenSource } from 'axios';
+import { IPaginationParams } from '@/interfaces/pagination-params.interface';
+import { IRenderList } from '@/interfaces/render-list.interface';
 
 export const initialState: () => ITeams = () => ({
   listTeams: {
@@ -18,33 +18,33 @@ export const initialState: () => ITeams = () => ({
     }
   },
   teamsListCancelTokenSource: null
-})
+});
 
 export default {
   namespaced: true,
   state: initialState(),
   mutations: {
     setListTeams(state: ITeams, { items, meta }: IRenderList<ITeamItem>): void {
-      state.listTeams.items = items
-      state.listTeams.meta = meta
+      state.listTeams.items = items;
+      state.listTeams.meta = meta;
     },
     setListTeamsCancelTokenSource(
       state: ITeams,
       payload: CancelTokenSource
     ): void {
-      state.teamsListCancelTokenSource = payload
+      state.teamsListCancelTokenSource = payload;
     },
     setListTeamsLoad(state: ITeams, payload: boolean): void {
-      state.listTeams.load = payload
+      state.listTeams.load = payload;
     },
     cancelGetListTeams(state: ITeams): void {
       if (state.teamsListCancelTokenSource)
-        state.teamsListCancelTokenSource.cancel()
+        state.teamsListCancelTokenSource.cancel();
     }
   },
   getters: {
     listTeams(state: ITeams): IRenderList<ITeamItem> {
-      return state.listTeams
+      return state.listTeams;
     }
   },
   actions: {
@@ -52,19 +52,19 @@ export default {
       { commit }: ActionContext<ITeams, any>,
       params: IPaginationParams
     ): Promise<void> {
-      const axiosSource = axios.CancelToken.source()
-      commit('setListTeamsCancelTokenSource', axiosSource)
-      commit('setListTeamsLoad', true)
+      const axiosSource = axios.CancelToken.source();
+      commit('setListTeamsCancelTokenSource', axiosSource);
+      commit('setListTeamsLoad', true);
 
       try {
-        const teams = await teamsService.getTeams(axiosSource.token, params)
-        commit('setListTeams', teams)
+        const teams = await teamsService.getTeams(axiosSource.token, params);
+        commit('setListTeams', teams);
       } catch (e) {
-        if (axios.isCancel(e)) return
-        console.error(e)
+        if (axios.isCancel(e)) return;
+        console.error(e);
       } finally {
-        commit('setListTeamsLoad', false)
+        commit('setListTeamsLoad', false);
       }
     }
   }
-}
+};

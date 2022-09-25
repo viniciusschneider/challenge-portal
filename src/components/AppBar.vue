@@ -52,52 +52,52 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { NotificationsModule, UiModule, UserModule } from '@/store/namespaces'
-import Vue from 'vue'
-import { io, Socket } from 'socket.io-client'
-import { IAccessToken } from '@/interfaces/access-token.interface'
-import Notifications from '@/components/Notifications.vue'
+import { Component } from 'vue-property-decorator';
+import { NotificationsModule, UiModule, UserModule } from '@/store/namespaces';
+import Vue from 'vue';
+import { io, Socket } from 'socket.io-client';
+import { IAccessToken } from '@/interfaces/access-token.interface';
+import Notifications from '@/components/Notifications.vue';
 import {
   INotificationItem,
   INotificationList
-} from '@/interfaces/notifications'
-import { environment } from '@/environments/environment'
-import { INotificationsParams } from '@/interfaces/notifications-params.interface'
-import { EnumRouteNames } from '@/router'
+} from '@/interfaces/notifications';
+import { environment } from '@/environments/environment';
+import { INotificationsParams } from '@/interfaces/notifications-params.interface';
+import { EnumRouteNames } from '@/router';
 
 @Component({ components: { Notifications } })
 export default class AppBar extends Vue {
   @NotificationsModule.Getter('notifications')
-  notifications: INotificationItem[]
-  @NotificationsModule.Getter('unread') unread: number
-  @NotificationsModule.Mutation('reset') reset: () => void
-  @NotificationsModule.Mutation('setLoad') setLoad: (payload: boolean) => void
+  notifications: INotificationItem[];
+  @NotificationsModule.Getter('unread') unread: number;
+  @NotificationsModule.Mutation('reset') reset: () => void;
+  @NotificationsModule.Mutation('setLoad') setLoad: (payload: boolean) => void;
   @NotificationsModule.Mutation('setNewNotification') setNewNotification: (
     payload: INotificationItem
-  ) => void
+  ) => void;
   @NotificationsModule.Mutation('setOldNotifications') setOldNotifications: (
     payload: INotificationItem[]
-  ) => void
+  ) => void;
   @NotificationsModule.Mutation('setReadNotification') setReadNotification: (
     payload: number
-  ) => void
+  ) => void;
   @NotificationsModule.Mutation('setShowVirtualPagination')
-  setShowVirtualPagination: (payload: boolean) => void
+  setShowVirtualPagination: (payload: boolean) => void;
   @NotificationsModule.Mutation('setUnread') setUnread: (
     payload: number
-  ) => void
-  @UiModule.Getter('getDrawer') drawer: boolean
-  @UiModule.Mutation('setDrawer') setDrawer: (payload: boolean) => void
-  @UserModule.Getter('getAccessToken') accessToken: IAccessToken
+  ) => void;
+  @UiModule.Getter('getDrawer') drawer: boolean;
+  @UiModule.Mutation('setDrawer') setDrawer: (payload: boolean) => void;
+  @UserModule.Getter('getAccessToken') accessToken: IAccessToken;
 
   pagination: INotificationsParams = {
     limit: 10,
     page: 0,
     timestamp: Date.now()
-  }
-  showNotifications = false
-  socket: Socket
+  };
+  showNotifications = false;
+  socket: Socket;
 
   mounted(): void {
     this.socket = io(`${environment.apiUrl}notifications`, {
@@ -105,71 +105,71 @@ export default class AppBar extends Vue {
         Authorization: `Bearer ${this.accessToken.token}`
       },
       autoConnect: false
-    }).connect()
+    }).connect();
 
     this.socket.on('new', (data: INotificationItem) => {
       if (new Date(data.createdAt).getTime() <= this.pagination.timestamp)
-        return
-      this.setNewNotification({ ...data, new: true })
-    })
+        return;
+      this.setNewNotification({ ...data, new: true });
+    });
 
     this.socket.on('unread-totalizer', (data: number) => {
-      this.setUnread(data)
-    })
+      this.setUnread(data);
+    });
 
     this.socket.on('read-notification', (notificationId: number) => {
-      this.setReadNotification(notificationId)
-    })
+      this.setReadNotification(notificationId);
+    });
 
     this.socket.emit('find-unread-totalizer', (data: number) => {
-      this.setUnread(data)
-    })
+      this.setUnread(data);
+    });
 
     this.socket.onAny((data, d) => {
-      console.log('any', data, d)
-    })
+      console.log('any', data, d);
+    });
   }
 
   destroyed(): void {
-    this.socket.disconnect()
+    this.socket.disconnect();
   }
 
   paginateNotifications(): void {
-    this.pagination.page++
-    this.setLoad(true)
+    this.pagination.page++;
+    this.setLoad(true);
     this.socket.emit(
       'list-old',
       this.pagination,
       ({ items, timestamp }: INotificationList) => {
-        if (!(timestamp === this.pagination.timestamp)) return
+        if (!(timestamp === this.pagination.timestamp)) return;
 
-        this.setLoad(false)
+        this.setLoad(false);
         if (items.length > 0) {
-          this.setOldNotifications(items)
+          this.setOldNotifications(items);
         } else {
-          this.setShowVirtualPagination(false)
+          this.setShowVirtualPagination(false);
         }
       }
-    )
+    );
   }
 
   resetNotifications(): void {
-    if (this.showNotifications) return
+    if (this.showNotifications) return;
 
-    this.reset()
-    this.pagination.timestamp = Date.now()
-    this.pagination.page = 0
-    this.paginateNotifications()
+    this.reset();
+    this.pagination.timestamp = Date.now();
+    this.pagination.page = 0;
+    this.paginateNotifications();
   }
 
   readNotification(notificationId: number): void {
-    this.setReadNotification(notificationId)
-    this.socket.emit('read-notification', { notificationId })
+    this.setReadNotification(notificationId);
+    this.socket.emit('read-notification', { notificationId });
   }
 
   logout(): void {
-    this.$store.commit('reset')
-    this.$router.push({ name: EnumRouteNames.LOGIN })
+    this.$store.commit('reset');
+    this.$router.push({ name: EnumRouteNames.LOGIN });
   }
 }
 </script>

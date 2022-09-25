@@ -33,25 +33,25 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop, Watch } from 'vue-property-decorator'
-import { IRenderList } from '@/interfaces/render-list.interface'
+import Vue from 'vue';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+import { IRenderList } from '@/interfaces/render-list.interface';
 
 @Component
 export default class RenderList extends Vue {
-  @Prop({ required: true }) data: IRenderList<any>
-  @Prop({ required: true }) emptyMessage: string
+  @Prop({ required: true }) data: IRenderList<any>;
+  @Prop({ required: true }) emptyMessage: string;
 
-  page = 1
+  page = 1;
 
   changePage(value: number): void {
-    this.page = value
-    this.$emit('changePage', this.page)
+    this.page = value;
+    this.$emit('changePage', this.page);
   }
 
   @Watch('data', { deep: true })
   changeData(): void {
-    this.page = this.data.meta.currentPage
+    this.page = this.data.meta.currentPage;
   }
 }
 </script>

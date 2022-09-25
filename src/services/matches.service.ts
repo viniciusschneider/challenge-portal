@@ -1,13 +1,13 @@
-import http from '@/common/http'
-import { IConfirmMatchParams } from '@/interfaces/confirm-match-params.interface'
-import { ICreateMatch } from '@/interfaces/create-match.interface'
-import { IIdResponse } from '@/interfaces/id-response.interface'
-import { IPaginationParams } from '@/interfaces/pagination-params.interface'
-import { IRenderList } from '@/interfaces/render-list.interface'
-import { ISearchParams } from '@/interfaces/search-params.interface'
-import { ITeamMatchesItem } from '@/interfaces/team-matches.interface'
-import { ITeamItem } from '@/interfaces/teams.interface'
-import { CancelToken } from 'axios'
+import http from '@/common/http';
+import { IConfirmMatchParams } from '@/interfaces/confirm-match-params.interface';
+import { ICreateMatch } from '@/interfaces/create-match.interface';
+import { IIdResponse } from '@/interfaces/id-response.interface';
+import { IPaginationParams } from '@/interfaces/pagination-params.interface';
+import { IRenderList } from '@/interfaces/render-list.interface';
+import { ISearchParams } from '@/interfaces/search-params.interface';
+import { ITeamMatchesItem } from '@/interfaces/team-matches.interface';
+import { ITeamItem } from '@/interfaces/teams.interface';
+import { CancelToken } from 'axios';
 
 export class MatchesService {
   async create(
@@ -16,7 +16,7 @@ export class MatchesService {
   ): Promise<IIdResponse> {
     return http.post<IIdResponse, ICreateMatch>('matches', params, {
       cancelToken
-    })
+    });
   }
 
   async searchMatches(
@@ -26,7 +26,7 @@ export class MatchesService {
     return http.get<IRenderList<ITeamMatchesItem>>('matches/search', {
       cancelToken,
       params
-    })
+    });
   }
 
   async getTeamMatches(
@@ -37,11 +37,11 @@ export class MatchesService {
     return http.get<IRenderList<ITeamMatchesItem>>(
       `matches/team-matches/${teamId}`,
       { cancelToken, params }
-    )
+    );
   }
 
   async getTeam(cancelToken: CancelToken, teamId: number): Promise<ITeamItem> {
-    return http.get<ITeamItem>(`teams/${teamId}`, { cancelToken })
+    return http.get<ITeamItem>(`teams/${teamId}`, { cancelToken });
   }
 
   async confirmMatch(
@@ -54,8 +54,8 @@ export class MatchesService {
       {
         cancelToken
       }
-    )
+    );
   }
 }
 
-export default new MatchesService()
+export default new MatchesService();

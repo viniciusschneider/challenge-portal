@@ -9,37 +9,37 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Ref } from 'vue-property-decorator'
+import Vue from 'vue';
+import { Component, Ref } from 'vue-property-decorator';
 
 type VForm = Vue & {
-  reset: () => boolean
-  resetValidation: () => boolean
-  validate: () => boolean
-}
+  reset: () => boolean;
+  resetValidation: () => boolean;
+  validate: () => boolean;
+};
 
 @Component
 export default class Form extends Vue {
-  valid = false
+  valid = false;
 
-  @Ref('form') form!: VForm
+  @Ref('form') form!: VForm;
 
   reset(): void {
-    this.form.reset()
+    this.form.reset();
   }
 
   resetValidation(): void {
-    this.form.resetValidation()
+    this.form.resetValidation();
   }
 
   validate(): void {
-    this.form.validate()
+    this.form.validate();
   }
 
   submit(): void {
-    this.validate()
+    this.validate();
 
-    if (this.valid) this.$emit('send', this.valid)
+    if (this.valid) this.$emit('send', this.valid);
   }
 }
 </script>

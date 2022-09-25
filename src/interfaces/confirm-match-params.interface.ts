@@ -1,4 +1,4 @@
 export interface IConfirmMatchParams {
-  matchId: number
-  teamId: number
+  matchId: number;
+  teamId: number;
 }

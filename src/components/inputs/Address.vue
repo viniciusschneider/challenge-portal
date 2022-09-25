@@ -123,20 +123,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { IAddress } from '@/interfaces/address.interface'
-import { maxLength, minLength, required } from '@/common/form-validate'
-import addressService from '@/services/address.service'
-import Vue from 'vue'
-import { ConfigsModule } from '@/store/namespaces'
-import { IUserAddress } from '@/interfaces/user-address.interface'
+import { Component, Prop } from 'vue-property-decorator';
+import { IAddress } from '@/interfaces/address.interface';
+import { maxLength, minLength, required } from '@/common/form-validate';
+import addressService from '@/services/address.service';
+import Vue from 'vue';
+import { ConfigsModule } from '@/store/namespaces';
+import { IUserAddress } from '@/interfaces/user-address.interface';
 
 @Component({})
 export default class Address extends Vue {
-  @ConfigsModule.Action('getUserAddress') getUserAddress: () => Promise<void>
-  @ConfigsModule.Getter('userAddress') userAddress: IUserAddress[]
+  @ConfigsModule.Action('getUserAddress') getUserAddress: () => Promise<void>;
+  @ConfigsModule.Getter('userAddress') userAddress: IUserAddress[];
 
-  @Prop({ required: true }) value: IAddress
+  @Prop({ required: true }) value: IAddress;
   rules = {
     cep: [required, minLength(8), maxLength(8)],
     state: [required, maxLength(50)],
@@ -145,26 +145,26 @@ export default class Address extends Vue {
     street: [required, maxLength(50)],
     number: [required],
     name: [required, maxLength(50)]
-  }
-  loading = false
-  usedUserAddress = false
-  newAddress: IAddress
+  };
+  loading = false;
+  usedUserAddress = false;
+  newAddress: IAddress;
 
   get disabled(): boolean {
-    return this.loading || this.usedUserAddress
+    return this.loading || this.usedUserAddress;
   }
 
   setAddress(address: IUserAddress | null): void {
-    if (!this.usedUserAddress) this.newAddress = { ...this.value }
+    if (!this.usedUserAddress) this.newAddress = { ...this.value };
 
     if (!address) {
-      this.usedUserAddress = false
-      this.$emit('input', { ...this.newAddress, id: null })
-      return
+      this.usedUserAddress = false;
+      this.$emit('input', { ...this.newAddress, id: null });
+      return;
     }
 
     const { id, cep, city, complement, neighborhood, number, state, street } =
-      address
+      address;
 
     this.$emit('input', {
       id,
@@ -175,30 +175,30 @@ export default class Address extends Vue {
       number,
       state,
       street
-    })
-    this.usedUserAddress = true
+    });
+    this.usedUserAddress = true;
   }
 
   async findCEP(): Promise<void> {
     try {
-      const { cep } = this.value
+      const { cep } = this.value;
 
       if (cep.length === 8) {
-        this.loading = true
-        const address = await addressService.findCEP(cep)
+        this.loading = true;
+        const address = await addressService.findCEP(cep);
         this.$emit('input', {
           ...this.value,
           ...address
-        })
-        this.loading = false
+        });
+        this.loading = false;
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   mounted(): void {
-    this.getUserAddress()
+    this.getUserAddress();
   }
 }
 </script>

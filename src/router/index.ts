@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import VueRouter, { NavigationGuardNext, Route, RouteConfig } from 'vue-router'
-import store from '@/store/index'
+import Vue from 'vue';
+import VueRouter, { NavigationGuardNext, Route, RouteConfig } from 'vue-router';
+import store from '@/store/index';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export enum EnumRouteNames {
   LOGIN = 'Login',
@@ -62,24 +62,24 @@ const routes: Array<RouteConfig> = [
     path: '*',
     redirect: '/teams'
   }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
 router.beforeEach((to: Route, from: Route, next: NavigationGuardNext<Vue>) => {
-  const token = store.state.user.accessToken.token
+  const token = store.state.user.accessToken.token;
 
   if (to.name !== EnumRouteNames.LOGIN && !token) {
-    next({ name: EnumRouteNames.LOGIN })
+    next({ name: EnumRouteNames.LOGIN });
   } else if (to.path === '/' || (to.name === EnumRouteNames.LOGIN && !!token)) {
-    next({ name: EnumRouteNames.TEAMS_LIST })
+    next({ name: EnumRouteNames.TEAMS_LIST });
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+export default router;

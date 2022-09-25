@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { IUiSnackbar } from '@/interfaces/state-ui.interface'
-import { UiModule } from '@/store/namespaces'
-import Vue from 'vue'
+import { Component } from 'vue-property-decorator';
+import { IUiSnackbar } from '@/interfaces/state-ui.interface';
+import { UiModule } from '@/store/namespaces';
+import Vue from 'vue';
 
 @Component
 export default class Snackbar extends Vue {
-  @UiModule.Getter('getSnackbar') snackbar: IUiSnackbar
-  @UiModule.Mutation('closeSnackbar') closeSnackbar: () => void
+  @UiModule.Getter('getSnackbar') snackbar: IUiSnackbar;
+  @UiModule.Mutation('closeSnackbar') closeSnackbar: () => void;
 }
 </script>

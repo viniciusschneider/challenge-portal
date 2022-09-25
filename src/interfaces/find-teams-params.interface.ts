@@ -1,7 +1,7 @@
-import { IPaginationParams } from './pagination-params.interface'
+import { IPaginationParams } from './pagination-params.interface';
 
 export interface IFindTeamsParams extends IPaginationParams {
-  address: string
-  endDate: Date
-  startDate: Date
+  address: string;
+  endDate: Date;
+  startDate: Date;
 }

@@ -45,14 +45,14 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { email, minLength, required } from '@/common/form-validate'
-import { IAccessToken } from '@/interfaces/access-token.interface'
-import { UserModule } from '@/store/namespaces'
-import Form from '@/components/Form.vue'
-import loginService from '@/services/login.service'
-import Vue from 'vue'
-import { EnumRouteNames } from '@/router'
+import { Component } from 'vue-property-decorator';
+import { email, minLength, required } from '@/common/form-validate';
+import { IAccessToken } from '@/interfaces/access-token.interface';
+import { UserModule } from '@/store/namespaces';
+import Form from '@/components/Form.vue';
+import loginService from '@/services/login.service';
+import Vue from 'vue';
+import { EnumRouteNames } from '@/router';
 
 @Component({
   components: { Form }
@@ -60,25 +60,25 @@ import { EnumRouteNames } from '@/router'
 export default class Login extends Vue {
   @UserModule.Action('setAccessToken') setAccessToken: (
     payload: IAccessToken
-  ) => Promise<void>
+  ) => Promise<void>;
 
-  loading = false
-  form = { email: 'admin@admin.com', password: '12345678' }
+  loading = false;
+  form = { email: 'admin@admin.com', password: '12345678' };
   rules = {
     email: [required, email],
     password: [required, minLength(8)]
-  }
+  };
 
   async send(): Promise<void> {
     try {
-      this.loading = true
-      const response = await loginService.login(this.form)
-      this.setAccessToken(response)
-      this.$router.push({ name: EnumRouteNames.TEAMS_LIST })
+      this.loading = true;
+      const response = await loginService.login(this.form);
+      this.setAccessToken(response);
+      this.$router.push({ name: EnumRouteNames.TEAMS_LIST });
     } catch (e) {
-      console.error(e)
+      console.error(e);
     } finally {
-      this.loading = false
+      this.loading = false;
     }
   }
 }

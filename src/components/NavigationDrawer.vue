@@ -39,17 +39,17 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { IUser } from '@/interfaces/user.interface'
-import { UiModule, UserModule } from '@/store/namespaces'
-import Vue from 'vue'
-import { EnumRouteNames } from '@/router'
+import { Component } from 'vue-property-decorator';
+import { IUser } from '@/interfaces/user.interface';
+import { UiModule, UserModule } from '@/store/namespaces';
+import Vue from 'vue';
+import { EnumRouteNames } from '@/router';
 
 @Component
 export default class NavigationDrawer extends Vue {
-  @UiModule.Mutation('setDrawer') setDrawer: (patload: boolean) => void
-  @UiModule.Getter('getDrawer') drawer: boolean
-  @UserModule.Getter('getUser') user: IUser
+  @UiModule.Mutation('setDrawer') setDrawer: (patload: boolean) => void;
+  @UiModule.Getter('getDrawer') drawer: boolean;
+  @UserModule.Getter('getUser') user: IUser;
 
   pages = [
     {
@@ -57,14 +57,14 @@ export default class NavigationDrawer extends Vue {
       title: 'Times',
       link: EnumRouteNames.TEAMS_LIST
     }
-  ]
+  ];
 
   get open(): boolean {
-    return this.drawer
+    return this.drawer;
   }
 
   set open(value: boolean) {
-    this.setDrawer(value)
+    this.setDrawer(value);
   }
 }
 </script>

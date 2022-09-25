@@ -44,33 +44,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { IScheduleGameForm } from '@/interfaces/schedule-game-form.interface'
-import { required } from '@/common/form-validate'
-import Address from '@/components/inputs/Address.vue'
-import Form from '@/components/Form.vue'
-import Vue from 'vue'
-import matchesService from '@/services/matches.service'
-import { ICreateMatch } from '@/interfaces/create-match.interface'
-import { MatchesModule, UiModule } from '@/store/namespaces'
-import { IUiSnackbar } from '@/interfaces/state-ui.interface'
-import { ITeamItem } from '@/interfaces/teams.interface'
-import { IPaginationParams } from '@/interfaces/pagination-params.interface'
-import axios, { CancelTokenSource } from 'axios'
+import { Component, Prop } from 'vue-property-decorator';
+import { IScheduleGameForm } from '@/interfaces/schedule-game-form.interface';
+import { required } from '@/common/form-validate';
+import Address from '@/components/inputs/Address.vue';
+import Form from '@/components/Form.vue';
+import Vue from 'vue';
+import matchesService from '@/services/matches.service';
+import { ICreateMatch } from '@/interfaces/create-match.interface';
+import { MatchesModule, UiModule } from '@/store/namespaces';
+import { IUiSnackbar } from '@/interfaces/state-ui.interface';
+import { ITeamItem } from '@/interfaces/teams.interface';
+import { IPaginationParams } from '@/interfaces/pagination-params.interface';
+import axios, { CancelTokenSource } from 'axios';
 
 @Component({
   components: { Address, Form }
 })
 export default class ScheduleDialog extends Vue {
-  @UiModule.Mutation('setSnackbar') setSnackbar: (state: IUiSnackbar) => void
-  @MatchesModule.Getter('team') team: ITeamItem
+  @UiModule.Mutation('setSnackbar') setSnackbar: (state: IUiSnackbar) => void;
+  @MatchesModule.Getter('team') team: ITeamItem;
   @MatchesModule.Action('getTeamMatches') getTeamMatches: (
     payload: IPaginationParams
-  ) => Promise<void>
-  @UiModule.Mutation('setLoading') setLoading: (state: boolean) => void
+  ) => Promise<void>;
+  @UiModule.Mutation('setLoading') setLoading: (state: boolean) => void;
 
-  @Prop({ required: true }) value: boolean
-  cancelToken: CancelTokenSource | null = null
+  @Prop({ required: true }) value: boolean;
+  cancelToken: CancelTokenSource | null = null;
   form: IScheduleGameForm = {
     date: null,
     address: {
@@ -84,46 +84,46 @@ export default class ScheduleDialog extends Vue {
       state: '',
       street: ''
     }
-  }
+  };
   rules = {
     date: [required]
-  }
+  };
 
   get show(): boolean {
-    return this.value
+    return this.value;
   }
 
   set show(value: boolean) {
-    this.$emit('input', value)
+    this.$emit('input', value);
   }
 
   destroyed(): void {
-    if (this.cancelToken) this.cancelToken.cancel()
+    if (this.cancelToken) this.cancelToken.cancel();
   }
 
   async send(): Promise<void> {
     try {
-      this.setLoading(true)
-      const { address, date } = this.form
-      const match: ICreateMatch = { date, teamId: this.team.id }
+      this.setLoading(true);
+      const { address, date } = this.form;
+      const match: ICreateMatch = { date, teamId: this.team.id };
 
       if (address.id) {
-        match.addressId = address.id
+        match.addressId = address.id;
       } else {
-        delete address.id
-        match.address = address
+        delete address.id;
+        match.address = address;
       }
 
-      this.cancelToken = axios.CancelToken.source()
-      await matchesService.create(this.cancelToken.token, match)
-      this.show = false
-      this.setSnackbar({ text: 'Partida criada com sucesso!' })
-      this.getTeamMatches({ page: 1, limit: 6 })
+      this.cancelToken = axios.CancelToken.source();
+      await matchesService.create(this.cancelToken.token, match);
+      this.show = false;
+      this.setSnackbar({ text: 'Partida criada com sucesso!' });
+      this.getTeamMatches({ page: 1, limit: 6 });
     } catch (e) {
-      if (axios.isCancel(e)) return
-      console.error(e)
+      if (axios.isCancel(e)) return;
+      console.error(e);
     } finally {
-      this.setLoading(false)
+      this.setLoading(false);
     }
   }
 }

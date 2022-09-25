@@ -30,33 +30,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { isAfter } from 'date-fns'
-import { requiredIntervalDates } from '@/common/form-validate'
-import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator';
+import { isAfter } from 'date-fns';
+import { requiredIntervalDates } from '@/common/form-validate';
+import Vue from 'vue';
 
 @Component
 export default class RangeDatePicker extends Vue {
-  @Prop({ required: true }) value: Date[]
+  @Prop({ required: true }) value: Date[];
 
-  dates: Date[] = []
-  menu = false
-  rules = [requiredIntervalDates]
-  viewDate: any = null
+  dates: Date[] = [];
+  menu = false;
+  rules = [requiredIntervalDates];
+  viewDate: any = null;
 
   formatDate(): void {
-    const [first, second] = this.dates
+    const [first, second] = this.dates;
 
     if (!second) {
-      this.viewDate = `${first} até`
-      return
+      this.viewDate = `${first} até`;
+      return;
     }
 
-    if (isAfter(first, second)) this.dates = [second, first]
+    if (isAfter(first, second)) this.dates = [second, first];
 
-    this.menu = false
-    this.viewDate = this.dates.join(' até ')
-    this.$emit('input', [...this.dates])
+    this.menu = false;
+    this.viewDate = this.dates.join(' até ');
+    this.$emit('input', [...this.dates]);
   }
 }
 </script>

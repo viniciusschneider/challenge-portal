@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import Snackbar from '@/components/Snackbar.vue'
-import Vue from 'vue'
+import Snackbar from '@/components/Snackbar.vue';
+import Vue from 'vue';
 
 export default Vue.extend({
   components: { Snackbar }
-})
+});
 </script>

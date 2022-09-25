@@ -58,34 +58,34 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { ITeamItem } from '@/interfaces/teams.interface'
-import { IPaginationParams } from '@/interfaces/pagination-params.interface'
-import { TeamsModule } from '@/store/namespaces'
-import RenderList from '@/components/RenderList.vue'
-import Vue from 'vue'
-import { IRenderList } from '@/interfaces/render-list.interface'
-import { EnumRouteNames } from '@/router'
+import { Component } from 'vue-property-decorator';
+import { ITeamItem } from '@/interfaces/teams.interface';
+import { IPaginationParams } from '@/interfaces/pagination-params.interface';
+import { TeamsModule } from '@/store/namespaces';
+import RenderList from '@/components/RenderList.vue';
+import Vue from 'vue';
+import { IRenderList } from '@/interfaces/render-list.interface';
+import { EnumRouteNames } from '@/router';
 
 @Component({ components: { RenderList } })
 export default class Teams extends Vue {
   @TeamsModule.Action('getListTeams') getListTeams: (
     params: IPaginationParams
-  ) => Promise<void>
-  @TeamsModule.Getter('listTeams') listTeams: IRenderList<ITeamItem>
-  @TeamsModule.Mutation('cancelGetListTeams') cancelGetListTeams: () => void
-  enumRouteNames = EnumRouteNames
+  ) => Promise<void>;
+  @TeamsModule.Getter('listTeams') listTeams: IRenderList<ITeamItem>;
+  @TeamsModule.Mutation('cancelGetListTeams') cancelGetListTeams: () => void;
+  enumRouteNames = EnumRouteNames;
 
   mounted(): void {
-    this.changePage(1)
+    this.changePage(1);
   }
 
   destroyed(): void {
-    this.cancelGetListTeams()
+    this.cancelGetListTeams();
   }
 
   changePage(page: number): void {
-    this.getListTeams({ page: page, limit: this.listTeams.meta.itemsPerPage })
+    this.getListTeams({ page: page, limit: this.listTeams.meta.itemsPerPage });
   }
 }
 </script>

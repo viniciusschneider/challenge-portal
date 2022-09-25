@@ -41,17 +41,17 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
-import { EnumRouteNames } from '@/router'
-import { IPaginationParams } from '@/interfaces/pagination-params.interface'
-import { IRenderList } from '@/interfaces/render-list.interface'
-import { ITeamItem } from '@/interfaces/teams.interface'
-import { ITeamMatchesItem } from '@/interfaces/team-matches.interface'
-import { MatchesModule } from '@/store/namespaces'
-import CardMatch from '@/components/CardMatch.vue'
-import RenderList from '@/components/RenderList.vue'
-import ScheduleDialog from './components/ScheduleDialog.vue'
-import Vue from 'vue'
+import { Component } from 'vue-property-decorator';
+import { EnumRouteNames } from '@/router';
+import { IPaginationParams } from '@/interfaces/pagination-params.interface';
+import { IRenderList } from '@/interfaces/render-list.interface';
+import { ITeamItem } from '@/interfaces/teams.interface';
+import { ITeamMatchesItem } from '@/interfaces/team-matches.interface';
+import { MatchesModule } from '@/store/namespaces';
+import CardMatch from '@/components/CardMatch.vue';
+import RenderList from '@/components/RenderList.vue';
+import ScheduleDialog from './components/ScheduleDialog.vue';
+import Vue from 'vue';
 
 @Component({
   components: { CardMatch, RenderList, ScheduleDialog }
@@ -59,38 +59,38 @@ import Vue from 'vue'
 export default class GameSchedule extends Vue {
   @MatchesModule.Action('getTeam') getTeam: (
     payload: number
-  ) => Promise<boolean>
+  ) => Promise<boolean>;
   @MatchesModule.Action('getTeamMatches') getTeamMatches: (
     payload: IPaginationParams
-  ) => Promise<void>
-  @MatchesModule.Getter('team') team: ITeamItem | null
+  ) => Promise<void>;
+  @MatchesModule.Getter('team') team: ITeamItem | null;
   @MatchesModule.Getter('listMatches')
-  listMatches: IRenderList<ITeamMatchesItem>
+  listMatches: IRenderList<ITeamMatchesItem>;
   @MatchesModule.Mutation('cancelGetTeamMatches')
-  cancelGetTeamMatches: () => void
-  @MatchesModule.Mutation('cancelGetTeam') cancelGetTeam: () => void
+  cancelGetTeamMatches: () => void;
+  @MatchesModule.Mutation('cancelGetTeam') cancelGetTeam: () => void;
 
-  enumRouteNames = EnumRouteNames
-  dialog = false
+  enumRouteNames = EnumRouteNames;
+  dialog = false;
 
   get id(): number {
-    return +this.$router.currentRoute.params.id
+    return +this.$router.currentRoute.params.id;
   }
 
   async mounted(): Promise<void> {
-    if (await this.getTeam(this.id)) this.changePage(1)
+    if (await this.getTeam(this.id)) this.changePage(1);
   }
 
   destroyed(): void {
-    this.cancelGetTeamMatches()
-    this.cancelGetTeam()
+    this.cancelGetTeamMatches();
+    this.cancelGetTeam();
   }
 
   changePage(page: number): void {
     this.getTeamMatches({
       page: page,
       limit: this.listMatches.meta.itemsPerPage
-    })
+    });
   }
 }
 </script>

@@ -27,37 +27,37 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
-import { IInputFile } from '@/interfaces/input-file.interface'
-import fileService from '@/services/file.service'
-import Vue from 'vue'
-import { fileType, maxFileSize } from '@/common/form-validate'
+import { Component, Prop } from 'vue-property-decorator';
+import { IInputFile } from '@/interfaces/input-file.interface';
+import fileService from '@/services/file.service';
+import Vue from 'vue';
+import { fileType, maxFileSize } from '@/common/form-validate';
 
 @Component
 export default class InputFile extends Vue {
-  @Prop() value: IInputFile
-  @Prop() readonly rules: any[]
-  fileRules = [maxFileSize, fileType]
+  @Prop() value: IInputFile;
+  @Prop() readonly rules: any[];
+  fileRules = [maxFileSize, fileType];
 
-  file: File = null
+  file: File = null;
 
   mounted(): void {
-    this.fileRules.push(...this.rules)
+    this.fileRules.push(...this.rules);
   }
 
   async sendFile(): Promise<void> {
     try {
-      if (!this.isValid) return
-      const file = await fileService.createTeamImage(this.file)
-      this.$emit('input', file)
+      if (!this.isValid) return;
+      const file = await fileService.createTeamImage(this.file);
+      this.$emit('input', file);
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   async removeFile(): Promise<void> {
-    this.file = null
-    this.$emit('input', null)
+    this.file = null;
+    this.$emit('input', null);
   }
 
   get isValid(): boolean {
@@ -65,7 +65,7 @@ export default class InputFile extends Vue {
       !!this.file &&
       this.file.size < 1000000 &&
       ['image/jpg', 'image/png', 'image/jpeg'].includes(this.file.type)
-    )
+    );
   }
 }
 </script>

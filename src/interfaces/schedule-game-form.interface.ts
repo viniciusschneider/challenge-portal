@@ -1,6 +1,6 @@
-import { IAddress } from './address.interface'
+import { IAddress } from './address.interface';
 
 export interface IScheduleGameForm {
-  address: IAddress
-  date: Date
+  address: IAddress;
+  date: Date;
 }

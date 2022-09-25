@@ -88,46 +88,47 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import { NotificationsModule } from '@/store/namespaces'
-import { INotificationItem } from '@/interfaces/notifications'
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
+import { NotificationsModule } from '@/store/namespaces';
+import { INotificationItem } from '@/interfaces/notifications';
 
 @Component
 export default class Notifications extends Vue {
-  @NotificationsModule.Getter('load') load: boolean
+  @NotificationsModule.Getter('load') load: boolean;
   @NotificationsModule.Getter('notifications')
-  notifications: INotificationItem[]
+  notifications: INotificationItem[];
   @NotificationsModule.Getter('showVirtualPagination')
-  showVirtualPagination: boolean
-  @NotificationsModule.Mutation('setLoad') setLoad: (payload: boolean) => void
+  showVirtualPagination: boolean;
+  @NotificationsModule.Mutation('setLoad') setLoad: (payload: boolean) => void;
 
-  listEndObserver: IntersectionObserver
+  listEndObserver: IntersectionObserver;
 
   mounted(): void {
-    const threshold = 0.5
+    const threshold = 0.5;
     this.listEndObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry.intersectionRatio < threshold || !entry.isIntersecting) return
+        if (entry.intersectionRatio < threshold || !entry.isIntersecting)
+          return;
 
-        this.setLoad(true)
-        this.$emit('load')
+        this.setLoad(true);
+        this.$emit('load');
       },
       {
         root: this.$refs['scrollContainer'] as Element,
         threshold
       }
-    )
+    );
 
-    this.listEndObserver.observe(this.$refs['sentinel'] as Element)
+    this.listEndObserver.observe(this.$refs['sentinel'] as Element);
   }
 
   destroyed(): void {
-    this.listEndObserver.disconnect()
+    this.listEndObserver.disconnect();
   }
 
   read(notificationId: number): void {
-    this.$emit('read', notificationId)
+    this.$emit('read', notificationId);
   }
 }
 </script>

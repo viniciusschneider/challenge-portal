@@ -6,7 +6,7 @@
         <p>{{ data.localTeamName }}</p>
       </div>
       <template v-if="!confirmMatch">
-        <span class="primary-color">&times;</span>
+        <span class="color-primary">&times;</span>
         <div>
           <template v-if="data.visitingTeamImage">
             <img :src="data.visitingTeamImage" alt="Logo do time visitante" />
@@ -46,17 +46,17 @@
 </template>
 
 <script lang="ts">
-import { ITeamMatchesItem } from '@/interfaces/team-matches.interface'
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { ITeamMatchesItem } from '@/interfaces/team-matches.interface';
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class CardMatch extends Vue {
-  @Prop({ required: true }) data: ITeamMatchesItem
-  @Prop({ default: false }) confirmMatch: boolean
+  @Prop({ required: true }) data: ITeamMatchesItem;
+  @Prop({ default: false }) confirmMatch: boolean;
 
   confirm(matchId: number): void {
-    this.$emit('confirm', matchId)
+    this.$emit('confirm', matchId);
   }
 }
 </script>
