@@ -1,12 +1,13 @@
-declare type SnackbarStatus = "success" | "error";
+declare type SnackbarStatus = 'success' | 'error'
 
 export interface IStateUi {
-  drawer: boolean;
-  snackbar: IUiSnackbar;
+  drawer: boolean
+  loading: boolean
+  snackbar: IUiSnackbar
 }
 
 export interface IUiSnackbar {
-  show?: boolean;
-  status?: SnackbarStatus;
-  text: string;
+  show?: boolean
+  status?: SnackbarStatus
+  text: string
 }

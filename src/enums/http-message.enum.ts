@@ -1,4 +1,7 @@
 export enum HttpMessage {
-  Unauthorized = "UNAUTHORIZED",
-  InvalidCredentials = "INVALID_CREDENTIALS"
+  InternalServerError = 'INTERNAL_SERVER_ERROR',
+  InvalidCredentials = 'INVALID_CREDENTIALS',
+  MatchUnavailable = 'MATCH_UNAVAILABLE',
+  TeamNotFound = 'TEAM_NOT_FOUND',
+  Unauthorized = 'UNAUTHORIZED'
 }

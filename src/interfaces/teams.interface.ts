@@ -1,18 +1,13 @@
-import { CancelTokenSource } from "axios";
-import { IMeta } from "./meta.interface";
+import { CancelTokenSource } from 'axios'
+import { IRenderList } from './render-list.interface'
 
 export interface ITeams {
-  listTeams: IListTeams;
-  teamsListCancelTokenSource: CancelTokenSource;
+  listTeams: IRenderList<ITeamItem>
+  teamsListCancelTokenSource: CancelTokenSource
 }
 
 export interface ITeamItem {
-  name: string;
-  url: string;
-}
-
-export interface IListTeams {
-  load: boolean;
-  meta: IMeta;
-  items: ITeamItem[];
+  id: number
+  name: string
+  url: string
 }

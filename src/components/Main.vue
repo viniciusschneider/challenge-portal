@@ -6,11 +6,12 @@
     </v-container>
   </v-main>
 </template>
+
 <script lang="ts">
-import Vue from "vue";
-import Snackbar from "@/components/Snackbar.vue";
+import Snackbar from '@/components/Snackbar.vue'
+import Vue from 'vue'
 
 export default Vue.extend({
-  components: { Snackbar },
-});
+  components: { Snackbar }
+})
 </script>

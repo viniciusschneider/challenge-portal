@@ -9,37 +9,43 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Ref } from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Ref } from 'vue-property-decorator'
 
 type VForm = Vue & {
-  reset: () => boolean;
-  resetValidation: () => boolean;
-  validate: () => boolean;
-};
+  reset: () => boolean
+  resetValidation: () => boolean
+  validate: () => boolean
+}
 
 @Component
 export default class Form extends Vue {
-  valid = false;
+  valid = false
 
-  @Ref("form") form!: VForm;
+  @Ref('form') form!: VForm
 
-  reset() {
-    this.form.reset();
+  reset(): void {
+    this.form.reset()
   }
 
-  resetValidation() {
-    this.form.resetValidation();
+  resetValidation(): void {
+    this.form.resetValidation()
   }
 
-  validate() {
-    this.form.validate();
+  validate(): void {
+    this.form.validate()
   }
 
-  submit() {
-    this.validate();
+  submit(): void {
+    this.validate()
 
-    if (this.valid) this.$emit("send", this.valid);
+    if (this.valid) this.$emit('send', this.valid)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+v-form {
+  position: relative;
+}
+</style>

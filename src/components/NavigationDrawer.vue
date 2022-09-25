@@ -30,35 +30,41 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
+    <v-switch
+      class="ps-3"
+      label="Dark"
+      v-model="$vuetify.theme.dark"
+    ></v-switch>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
-import { IUser } from "@/interfaces/user.interface";
-import { UiModule, UserModule } from "@/store/namespaces";
+import { Component } from 'vue-property-decorator'
+import { IUser } from '@/interfaces/user.interface'
+import { UiModule, UserModule } from '@/store/namespaces'
+import Vue from 'vue'
+import { EnumRouteNames } from '@/router'
 
 @Component
 export default class NavigationDrawer extends Vue {
-  @UiModule.Mutation("setDrawer") setDrawer: any;
-  @UiModule.Getter("getDrawer") drawer: boolean;
-  @UserModule.Getter("getUser") user: IUser;
+  @UiModule.Mutation('setDrawer') setDrawer: (patload: boolean) => void
+  @UiModule.Getter('getDrawer') drawer: boolean
+  @UserModule.Getter('getUser') user: IUser
 
   pages = [
     {
-      icon: "mdi-account-group-outline",
-      title: "Times",
-      link: "Teams",
-    },
-  ];
+      icon: 'mdi-account-group-outline',
+      title: 'Times',
+      link: EnumRouteNames.TEAMS_LIST
+    }
+  ]
 
-  get open() {
-    return this.drawer;
+  get open(): boolean {
+    return this.drawer
   }
 
   set open(value: boolean) {
-    this.setDrawer(value);
+    this.setDrawer(value)
   }
 }
 </script>

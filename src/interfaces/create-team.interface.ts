@@ -1,5 +1,5 @@
 export interface ICreateTeam {
-  imageId: number;
-  name: string;
-  typeSportId: number;
+  imageId: number
+  name: string
+  typeSportId: number
 }
