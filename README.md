@@ -1,4 +1,4 @@
-# portal-school
+# challenge-portal
 
 ## Project setup
 ```

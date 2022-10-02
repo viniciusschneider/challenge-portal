@@ -12,6 +12,7 @@
       <Form class="ma-10" @send="send">
         <v-col cols="12">
           <v-text-field
+            id="email"
             v-model.trim="form.email"
             label="E-mail"
             dense
@@ -21,6 +22,7 @@
 
         <v-col cols="12">
           <v-text-field
+            id="password"
             v-model.trim="form.password"
             label="Senha"
             dense
@@ -30,6 +32,7 @@
 
         <v-col cols="12">
           <v-btn
+            id="btn-submit"
             type="submit"
             block
             color="primary"
@@ -63,7 +66,7 @@ export default class Login extends Vue {
   ) => Promise<void>;
 
   loading = false;
-  form = { email: 'admin@admin.com', password: '12345678' };
+  form = { email: '', password: '' };
   rules = {
     email: [required, email],
     password: [required, minLength(8)]

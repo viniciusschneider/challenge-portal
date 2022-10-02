@@ -16,7 +16,7 @@ import { initialState as userInitialState } from '@/store/user';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store<IState>({
+export const storeConfig = {
   modules: {
     configs,
     matches,
@@ -26,7 +26,7 @@ export default new Vuex.Store<IState>({
     user
   },
   mutations: {
-    reset(state: IState) {
+    reset(state: IState): void {
       localStorage.clear();
 
       state.configs = configsInitialState();
@@ -42,4 +42,5 @@ export default new Vuex.Store<IState>({
       };
     }
   }
-});
+};
+export default new Vuex.Store<IState>(storeConfig);

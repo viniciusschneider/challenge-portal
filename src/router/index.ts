@@ -12,7 +12,7 @@ export enum EnumRouteNames {
   TEAMS_FIND = 'TeamsFind'
 }
 
-const routes: Array<RouteConfig> = [
+export const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: EnumRouteNames.LOGIN,

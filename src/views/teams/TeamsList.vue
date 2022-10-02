@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col>
-          <h1>Times</h1>
+          <h1>Meus Times</h1>
         </v-col>
         <v-col class="d-flex justify-end">
           <v-btn
@@ -33,9 +33,6 @@
           <v-img height="250" :src="team.url"></v-img>
           <div class="card-effect"></div>
           <div class="icon">
-            <v-btn color="primary" elevation="2" icon x-large>
-              <v-icon>mdi-cog</v-icon>
-            </v-btn>
             <v-btn
               color="primary"
               elevation="2"

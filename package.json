@@ -1,17 +1,19 @@
 {
-  "name": "portal-school",
+  "name": "challenge-portal",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit  --setupTestFrameworkScriptFile=./tests/setup.ts",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
+    "flush-promises": "^1.0.2",
+    "lodash": "^4.17.21",
     "register-service-worker": "^1.7.1",
     "socket.io-client": "^4.5.1",
     "vue": "^2.6.11",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
+    "@types/lodash": "^4.14.185",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.13",

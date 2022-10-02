@@ -39,7 +39,9 @@ export default {
       store.commit('setAccessToken', accessToken);
 
       if (accessToken.token) {
-        const user = JSON.parse(atob(accessToken.token.split('.')[1]));
+        const user = JSON.parse(
+          decodeURIComponent(escape(atob(accessToken.token.split('.')[1])))
+        );
         store.commit('setUser', user);
       }
 
