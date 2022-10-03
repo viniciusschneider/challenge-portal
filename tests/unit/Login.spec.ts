@@ -43,7 +43,6 @@ describe('Login.vue', () => {
   });
 
   it('expect form is valid', async () => {
-    console.log('path', wrapper.vm.$route.path);
     wrapper.find('#email').setValue('admin@admin.com');
     wrapper.find('#password').setValue('12345678');
     await wrapper.find('#email').trigger('input');

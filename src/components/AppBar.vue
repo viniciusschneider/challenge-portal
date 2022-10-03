@@ -124,10 +124,6 @@ export default class AppBar extends Vue {
     this.socket.emit('find-unread-totalizer', (data: number) => {
       this.setUnread(data);
     });
-
-    this.socket.onAny((data, d) => {
-      console.log('any', data, d);
-    });
   }
 
   destroyed(): void {
