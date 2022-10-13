@@ -132,7 +132,7 @@ export default {
           }
         }
       }: ActionContext<IMatches, any>,
-      params: IPaginationParams
+      params: IPaginationParams & { teamId: number }
     ): Promise<void> {
       const axiosSource = axios.CancelToken.source();
       commit('setSearchMatchesCancelTokenSource', axiosSource);

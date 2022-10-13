@@ -71,7 +71,7 @@ export default class TeamsFind extends Vue {
     payload: IFindTeams
   ) => void;
   @MatchesModule.Action('getSearchMatches') getSearchMatches: (
-    params: IPaginationParams
+    params: IPaginationParams & { teamId: number }
   ) => Promise<void>;
   @UiModule.Mutation('setSnackbar') setSnackbar: (payload: IUiSnackbar) => void;
   @MatchesModule.Action('getTeam') getTeam: (
@@ -111,7 +111,8 @@ export default class TeamsFind extends Vue {
   changePage(page: number): void {
     this.getSearchMatches({
       page,
-      limit: this.searchMatches.meta.itemsPerPage
+      limit: this.searchMatches.meta.itemsPerPage,
+      teamId: this.id
     });
   }
 

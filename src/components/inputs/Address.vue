@@ -108,6 +108,7 @@
         label="Número"
         v-model.trim="value.number"
         maxLength="50"
+        type="number"
       ></v-text-field>
     </v-col>
     <v-col cols="12">
